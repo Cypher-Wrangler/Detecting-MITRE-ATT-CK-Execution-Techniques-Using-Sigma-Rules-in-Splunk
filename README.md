@@ -11,5 +11,46 @@ process-creation telemetry.
 - Validate detection using real Windows logs
 
 Step 1
-- SigmaHQ's GitHub and select the rules directory/folder
-  
+- SigmaHQ's GitHub and select the rules directory/folder , interested in process-creation Event ID =1 for sysmon or windows Event ID = 4688
+- Detection logic
+- 
+```yaml
+title: Potenctial Encoded PowerShell Command Execution - ProccessCreation
+id: 784c3c4b-ab8f-4d63-8c16-7c2362ea27c9
+status: test
+description: Detects PowerShell execution using encoded command flags
+author: Kennedy Kamau
+modified: 2026-02-09
+references:
+    - https://o365blog.com/aadinternals/
+tags:
+    - attack.execution
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        - Image|endswith:
+              - '\powershell.exe'
+        - OriginalFileName:
+              - '\PowerShell.Exe'
+    selection_cli:
+        CommandLine|contains:
+            - '-enc '
+            - '-encodedcommand'
+            - '-e'
+    selection_evtid:
+           - EventID: 1
+    condition: all of selection_*
+falsepositives:
+    - Legitimate use of the library for administrative activity
+level: high
+
+```
+# Step using sigconverter to translate too Splunk SPL
+```spl
+Image="*\\powershell.exe" OR OriginalFileName="\\PowerShell.Exe" CommandLine IN ("*-enc *", "*-encodedcommand*", "*-e*") EventID=1
+```
+
+# Splunk 
+<img width="2227" height="1336" alt="image" src="https://github.com/user-attachments/assets/92ae1aee-c88c-4d62-92a1-0b0fa0944265" />
