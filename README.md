@@ -21,7 +21,7 @@ Step 1
 - Detection logic
 - 
 ```yaml
-title: Potenctial Encoded PowerShell Command Execution - ProccessCreation
+title: Potential Encoded PowerShell Command Execution - Proccess Creation
 id: 784c3c4b-ab8f-4d63-8c16-7c2362ea27c9
 status: test
 description: Detects PowerShell execution using encoded command flags
