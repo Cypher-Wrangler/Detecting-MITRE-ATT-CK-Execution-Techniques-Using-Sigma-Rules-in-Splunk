@@ -1,14 +1,20 @@
 # Detecting-MITRE-ATT-CK-Execution-Techniques-Using-Sigma-Rules-in-Splunk
-# Overview
+
+## Overview
 Creating Sigma rules to be Operationalised in splunk to detect encoded Powershell execution, a common adversary technique used to obfuscate malicious commands
 during the Execution phase of an attack. This project maps Sigma detection logic to Splunk SPL, aligns detection with MITRE ATT&CK, and validates them using real Windows
 process-creation telemetry.
 
-# Objective
+## Objective
 - Detect PowerShell encoded commands (-enc, -EncodedCommand)
 - Translate Sigma rules to Splunk SPL
 - Aligns detections with MITRE ATT&CK Execution (TA0002)
 - Validate detection using real Windows logs
+
+## MITRE ATT&CK Mapping
+Tactic: Execution
+Technique: PowerShell
+ID: T1059.001
 
 Step 1
 - SigmaHQ's GitHub and select the rules directory/folder , interested in process-creation Event ID =1 for sysmon or windows Event ID = 4688
@@ -70,13 +76,13 @@ The detection was operationalised as a scheduled alert in Splunk Enterprise.
 
 <img width="804" height="994" alt="Screenshot 2026-02-10 143803" src="https://github.com/user-attachments/assets/b128a86a-57db-4b95-9102-3c23067e5072" />
 
-## The alert provides the following fields to support rapid triage:
+### The alert provides the following fields to support rapid triage:
  - Timestamp
  - User account
  - Parent process
  - Full commmand line
 
-## Analyst Response Workflow
+### Analyst Response Workflow
 - Review the encoded PowerShell commmand line
 - Decode the Base64 payload to determine the intent
 - Identify the parent process
