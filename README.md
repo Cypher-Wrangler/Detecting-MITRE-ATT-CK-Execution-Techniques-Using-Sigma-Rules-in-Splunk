@@ -61,11 +61,13 @@ SPL detected one PowerShell encoded event
   ```
 - Scheduled the alert with defined trigger conditions and medium classification: 
 <img width="804" height="994" alt="Screenshot 2026-02-10 143803" src="https://github.com/user-attachments/assets/b128a86a-57db-4b95-9102-3c23067e5072" />
- The alert provides the following fields to support rapid triage:
+
+The alert provides the following fields to support rapid triage:
  - Timestamp
  - User account
  - Parent process
  - Full commmand line
+
 When the alert fires, analysts should:
 - Review the encoded PowerShell commmand line
 - Decode the Base64 payload to determine the intent
