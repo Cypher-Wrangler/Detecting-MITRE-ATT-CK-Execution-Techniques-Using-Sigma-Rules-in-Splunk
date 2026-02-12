@@ -53,4 +53,22 @@ Image="*\\powershell.exe" OR OriginalFileName="\\PowerShell.Exe" CommandLine IN 
 ```
 
 # Splunk 
+SPL detected one PowerShell encoded event
 <img width="2227" height="1336" alt="image" src="https://github.com/user-attachments/assets/92ae1aee-c88c-4d62-92a1-0b0fa0944265" />
+- To detect any future encoded commands being run in the environmnet, implement alerting:
+  ```spl
+  Image="*\\powershell.exe" OR OriginalFileName="\\PowerShell.Exe" CommandLine IN ("*-enc *", "*-encodedcommand*", "*-e*") EventID=1 | table _time, host, user, ParentImage, Image, CommandLine | sort - _time
+  ```
+- Scheduled the alert with defined trigger conditions and medium classification: 
+<img width="804" height="994" alt="Screenshot 2026-02-10 143803" src="https://github.com/user-attachments/assets/b128a86a-57db-4b95-9102-3c23067e5072" />
+ The alert provides the following fields to support rapid triage:
+ - Timestamp
+ - User account
+ - Parent process
+ - Full commmand line
+When the alert fires, analysts should:
+- Review the encoded PowerShell commmand line
+- Decode the Base64 payload to determine the intent
+- Identify the parent process
+- Scope the execution across assets
+- Escalate to incident response if malicious behavior is confirmed.
